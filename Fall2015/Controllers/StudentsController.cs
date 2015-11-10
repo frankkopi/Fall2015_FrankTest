@@ -135,6 +135,10 @@ namespace Fall2015.Controllers
                 student.SaveImage(image, path , "/ProfileImages/");
                 _studentsRepository.Save();
                 _emailer.Send("Welcome to our website...");
+
+                // get the studentId
+                // send the studentId to each competency from the IEnumerable<int> compIds
+
                 return View("Thanks");
             }
             else
