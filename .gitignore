@@ -1,0 +1,73 @@
+#OS junk files
+[Tt]humbs.db
+*.DS_Store
+
+#Visual Studio files
+*.[Oo]bj
+*.user
+*.aps
+*.pch
+*.vspscc
+*.vssscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.[Cc]ache
+*.ilk
+*.log
+*.lib
+*.sbr
+*.sdf
+*.dll
+*.opensdf
+*.unsuccessfulbuild
+*.mdf
+*.ldf
+ipch/
+obj/
+[Bb]in
+[Dd]ebug*/
+[Rr]elease*/
+Ankh.NoLoad
+*.pubxml
+
+#Tooling
+_ReSharper*/
+*.resharper
+[Tt]est[Rr]esult*
+
+#Project files
+[Bb]uild/
+
+#NuGet
+![Pp]ackages/
+[Pp]ackages/*
+![Pp]ackages/repositories.*
+
+
+# visual studio database projects
+*.dbmdl
+
+#Test files
+*.testsettings
+
+#Anltl4 allowed files
+!Antlr4*.*
+Antlr4.Runtime.v2*
+Antlr4.Runtime.v3*
+*.suo
+
+#Ignore any merge orig files
+*.orig
+
+#ignore log directories
+[Ll]ogs
+nuget.config
+.gitattributes
+
+# Office Temp Files
+~$*
