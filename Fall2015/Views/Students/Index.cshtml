@@ -1,0 +1,221 @@
+﻿' @model Fall2015.ViewModels.StudentIndexViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+
+<h2>Index</h2>
+
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+
+                <div class="panel-heading">
+                    Filter displayed students
+                </div>
+
+                <div>
+                    <input type="button" class="btn btn-default" id="btnCompetencies" value="Filter on competencies..." />
+                    <div class="MarginLeft40">
+                        <input type="button" class="btn btn-primary pull-right Invisible" value="Edit Competencies" id="btnEditCompetencies" />
+
+                        @foreach (var compHeader in Model.CompetencyHeaders)
+                        {
+                            <div class="Invisible FilterCompetencies">
+                                <label class="lblHeader"><input type="checkbox" name="competencyHeader" class="CompetencyHeader MarginRight5" />@compHeader.Name</label>
+                                <span class="glyphicon glyphicon-plus Invisible"></span>
+
+                                <div class="outerContainer">
+                                    @foreach (var competency in @compHeader.Competencies)
+                                    {
+                                        <div class="MarginLeft40 CompetencyDiv">
+
+                                            <label class="CompetencyLabel"><input class="MarginRight5 Competency" type="checkbox" name="Competencies" value="@competency.Name" />@competency.Name</label>
+                                            <span class="glyphicon glyphicon-pencil Invisible"></span>
+                                            <span class="glyphicon glyphicon-remove Invisible"></span>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- first column -->
+        <div class="col-md-4 hidden-sm hidden-xs">
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum erat nibh, semper sit amet ultricies
+                quis, tempus a lectus. Nullam vehicula leo nisi, quis consequat orci faucibus non. Quisque vitae dapibus
+                nisi. Suspendisse bibendum feugiat sapien, a sollicitudin purus interdum a. Suspendisse ac varius orci.
+                Duis fermentum tellus non velit aliquam rhoncus. In pretium pulvinar mauris ut congue. Pellentesque eu mi
+                ac arcu venenatis pulvinar eget vitae sapien. Suspendisse potenti. Fusce pellentesque nunc vel leo interdum,
+                ac aliquam est elementum. Duis gravida nunc orci, vitae sollicitudin tortor gravida vitae. Nunc sed diam
+                non lorem semper molestie. Donec quis aliquet justo. Fusce sapien massa, volutpat eget tincidunt tin.
+                Proin varius sit amet nisl sit amet mattis. Sed ut mattis nisl. Suspendisse vitae augue tincidunt,
+                ultricies mauris sed, convallis odio. Praesent at lorem varius, porttitor mauris quis, ultricies metus.
+            </p>
+        </div>
+
+        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+            <!-- second column -->
+            @foreach (var item in Model.Students.ToList())
+            {
+                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                    <a href="@Url.Action("Edit", "Students", new {studentId = item.StudentId})">
+                        <img src="../../@item.ProfileImagePath" class="thumbnail" />
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Firstname
+        </th>
+        <th>
+            Lastname
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            MobilePhone
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Students.ToList())
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Firstname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lastname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MobilePhone)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { studentId = item.StudentId }) |
+                @Html.ActionLink("Details", "Details", new { studentId = item.StudentId }) |
+                @Html.ActionLink("Delete", "Delete", new { studentId = item.StudentId })
+            </td>
+        </tr>
+    }
+</table>
+
+
+
+<script type="text/javascript">
+    $(function () { // wait for when document is loaded. Use $(function(){});
+
+        $(".glyphicon-plus").click(function () {
+            //console.log("I am here");
+            //console.log($(this).parent());
+
+            $(this).parent().children(".outerContainer") // $(this) gives you the position (element) where to start, // this is the element the user clicks on
+                .prepend('<input type="text" class="form-control compHeader"/>' +
+                    '<input type="button" id="btnSave" class="btn btn-primary" value="Save Competency"/>');
+
+            $("#btnSave").click(function () {
+                var value = $(this).parent().children(".compHeader").val();
+                //alert(value);
+                //.text(); to get text from label
+                //.val(); to get value from input element
+                var compHeaderName = $(this).parent().parent().children(".lblHeader").text(); // Ex: find the relevant Competency Header Name
+                //alert(compHeaderName);
+
+                // because this inside the $.ajax is referencing the ajax call itself
+                // now we got a reference to the "btnSave" button
+                var that = $(this);
+
+                // call the Create (post) of CompetencyHeader controller
+                var myData = {
+                    name: value,
+                    competencyHeaderName: compHeaderName
+                };
+
+                // make ajax call
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Create", "Competencies")',
+                    data: JSON.stringify(myData),
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        // update the user interface
+                        //console.log(data);
+                        //alert(myData.name);
+                        that.parent().parent().children(".outerContainer").append(
+                            '<div class="MarginLeft40 CompetencyDiv">'+
+                            '<label class="lblHeader">' +
+                                    '<input type="checkbox" name="competencyHeader" class="CompetencyHeader MarginRight5" />'+
+                                    myData.name +
+                            '</label>'+
+                            '<span class="glyphicon glyphicon-pencil"></span>' +
+                            '<span class="glyphicon glyphicon-remove"></span>'+
+                            '</div>');
+                        
+                        $("#btnSave").remove();
+                        $(".compHeader").remove();
+                        //location.reload();
+                    },
+                    error: function () {
+                        alert("Something bad happended");
+                    }
+                });
+            });
+        });
+
+        // $("#btnSave").click(function () {
+        //     alert("is this working1 ?");
+        // });
+
+        // $(document.body).on("click", "#btnSave", function() {
+        //   alert("is this working2 ?");
+        //});
+
+        var showCompetencies = false;
+        $("#btnCompetencies").click(function () {
+            //when user clicks the button with the id, btnCompetencies
+            if (!showCompetencies) {
+                $(".FilterCompetencies").show("fast");
+                $("#btnEditCompetencies").show();
+                showCompetencies = true;
+            } else {
+                $(".FilterCompetencies").hide("fast");
+                $("#btnEditCompetencies").hide();
+                showCompetencies = false;
+            }
+        });
+
+        $("#btnEditCompetencies").click(function () {
+            //displays all the icons
+            $(".glyphicon-remove").show();
+            $(".glyphicon-pencil").show();
+            $(".glyphicon-plus").show();
+        });
+
+    });
+
+</script>

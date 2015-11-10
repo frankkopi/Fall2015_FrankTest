@@ -1,0 +1,25 @@
+﻿@model Fall2015.ViewModels.CreateEditStudentViewModel 
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Edit</h2>
+
+<img src="@Model.Student.ProfileImagePath" alt="Student Profile Image" />
+
+<!-- to allow uploading a file -->
+@using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary()
+
+    <div>
+        @Html.HiddenFor(m => m.Student.ProfileImagePath)
+    </div>
+    <div>
+        @Html.HiddenFor(m => m.Student.StudentId)
+    </div>
+
+    @Html.Partial("_CreateEditStudent")
+
+}

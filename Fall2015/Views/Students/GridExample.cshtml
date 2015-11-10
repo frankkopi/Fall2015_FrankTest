@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewBag.Title = "GridExamples";
+}
+@{
+    ViewBag.Title = "GridExamples";
+    Layout = ""; //reset layout to use no layout file
+}
+<link rel="stylesheet" type="text/css" href="~/Content/bootstrap.min.css" /> @*Import bootstrap since we set Layout = ""*@
+<link rel="stylesheet" type="text/css" href="~/Content/Site.css" /> @*Import bootstrap since we set Layout = ""*@
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4">
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum erat nibh, semper sit amet ultricies quis, tempus a lectus. Nullam vehicula leo nisi, quis consequat orci faucibus non. Quisque vitae dapibus nisi. Suspendisse bibendum feugiat sapien, a sollicitudin purus interdum a. Suspendisse ac varius orci. Duis fermentum tellus non velit aliquam rhoncus. In pretium pulvinar mauris ut congue. Pellentesque eu mi ac arcu venenatis pulvinar eget vitae sapien. Suspendisse potenti. Fusce pellentesque nunc vel leo interdum, ac aliquam est elementum. Duis gravida nunc orci, vitae sollicitudin tortor gravida vitae. Nunc sed diam non lorem semper molestie. Donec quis aliquet justo. Fusce sapien massa, volutpat eget tincidunt tincidunt, imperdiet vel ligula.
+
+                Proin varius sit amet nisl sit amet mattis. Sed ut mattis nisl. Suspendisse vitae augue tincidunt, ultricies mauris sed, convallis odio. Praesent at lorem varius, porttitor mauris quis, ultricies metus. Suspendisse at odio eget ex interdum rhoncus sed ut leo. Aenean vestibulum elit vitae sem dignissim faucibus. Morbi tincidunt mollis lacus, eu auctor libero sagittis sollicitudin. Ut eleifend, nibh viverra scelerisque dapibus, nunc turpis faucibus ipsum, eu hendrerit nunc est vitae purus. Aenean iaculis accumsan orci, sit amet placerat felis malesuada vitae. Mauris blandit lectus sed efficitur fermentum. Nullam vulputate auctor velit, eu blandit erat convallis at. Etiam vitae pulvinar arcu.
+
+                Vivamus ac lectus quam. Aliquam erat volutpat. Nam varius elit id ipsum tincidunt, ut tempus ipsum aliquet. Quisque semper, urna id egestas vehicula, mauris nisi venenatis leo, ac consequat orci urna eget ante. Etiam egestas elit sit amet augue lobortis elementum. Nunc gravida tellus at viverra elementum. Sed scelerisque, elit sit amet luctus blandit, odio enim lacinia orci, a feugiat mi ante a lacus. Fusce ut odio ut diam consectetur convallis. Praesent eu ipsum metus. Nulla facilisi. Pellentesque massa turpis, vestibulum a nisl ac, viverra malesuada mauris. Phasellus vel vestibulum mauris. Nulla vel massa quam. Sed aliquet, nunc eget rhoncus porttitor, nisi lacus posuere justo, at vestibulum ante enim quis nunc. In viverra mi a ligula elementum volutpat. Pellentesque vel turpis turpis.
+
+            </p>
+        </div>
+
+        <div class="col-lg-8">
+            <h1>Testing second col</h1>
+        </div>
+    </div>
+</div>
+
+@*  
+<h2>GridExamples</h2>
+
+<p>Example 1</p>
+    <p>Goes to vertical when smaller than medium size</p>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-1">.col-md-1</div>
+            <div class="col-md-1">.col-md-1</div>
+            <div class="col-md-1">.col-md-1</div>
+            <div class="col-md-1">.col-md-1</div>
+            <div class="col-md-1">.col-md-1</div>
+            <div class="col-md-1">.col-md-1</div>
+            <div class="col-md-1">.col-md-1</div>
+            <div class="col-md-1">.col-md-1</div>
+            <div class="col-md-1">.col-md-1</div>
+            <div class="col-md-1">.col-md-1</div>
+            <div class="col-md-1">.col-md-1</div>
+            <div class="col-md-1">.col-md-1</div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">.col-md-8</div>
+            <div class="col-md-4">.col-md-4</div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">.col-md-4</div>
+            <div class="col-md-4">.col-md-4</div>
+            <div class="col-md-4">.col-md-4</div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">.col-md-6</div>
+            <div class="col-md-6 hidden-xs hidden-lg">hides when xs or large</div>
+        </div>
+    </div>
+*@
+
+
+@*<p>Example 2</p>
+    <div class="container">
+
+        <p>Stack the columns on mobile by making one full-width and the other half-width</p>
+        <div class="row">
+            <div class="col-xs-12 col-md-8">.col-xs-12 .col-md-8</div>
+            <div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
+        </div>
+
+        <p>Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop</p>
+        <div class="row">
+            <div class="col-sm-6 col-md-4">.col-xs-6 .col-md-4</div>
+            <div class="col-sm-6 col-md-4">.col-xs-6 .col-md-4</div>
+            <div class="col-sm-6 col-md-4">.col-xs-6 .col-md-4</div>
+        </div>
+    </div>*@
+
+
+
+@*<p>Example 3</p>
+<div class="container">
+    <p>Full width on xs, half width on sm, 2/3 - 1/3 on medium.</p>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-8">.col-xs-12 .col-sm-6 .col-md-8</div>
+        <div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
+    </div>
+</div>*@
+
+
+@*<a href="@Url.Action("Edit", new { id = @item.StudentId})">
+        <img src="@item.ProfileImagePath" alt="Profile image" />
+    </a>*@
