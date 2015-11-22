@@ -79,6 +79,18 @@ namespace Fall2015.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+
+        public int StudentId { get; set; }
+
+        [Required(ErrorMessage = "Wrong, stupid user. You must have a firstname.")]
+        public string Firstname { get; set; }
+
+        [Required]
+        public string Lastname { get; set; }
+
+        public string MobilePhone { get; set; }
+
     }
 
     public class ResetPasswordViewModel

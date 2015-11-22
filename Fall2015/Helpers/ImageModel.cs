@@ -10,9 +10,7 @@ namespace Fall2015.Helpers
 {
     public class ImageModel
     {
-        public static void ResizeAndSave(
-            string savePath, string fileName, 
-            Stream imageBuffer, int maxSideSize)
+        public static void ResizeAndSave(string savePath, string fileName, Stream imageBuffer, int maxSideSize)
         {
             int newWidth;
             int newHeight;

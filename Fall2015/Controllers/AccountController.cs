@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Fall2015.Models;
+using Fall2015.Repositories;
 
 namespace Fall2015.Controllers
 {
@@ -139,7 +140,8 @@ namespace Fall2015.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            RegisterViewModel model = new RegisterViewModel();
+            return View(model);
         }
 
         //
@@ -155,6 +157,22 @@ namespace Fall2015.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    Student student = new Student()
+                    {
+                        StudentId = 0,
+                        ApplicationUserId = user.Id,
+                        Firstname = model.Firstname,
+                        Lastname = model.Lastname,
+                        Email = model.Email,
+                        MobilePhone = model.MobilePhone,
+                        ProfileImagePath = null,
+                        EducationId = 17 // No Education Chosen
+                    };
+                    StudentsController studentCtrl = new StudentsController(new StudentsRepository(), new EducationsRepository(),
+                            new CompetencyHeadersRepository(), new Emailer());
+
+                    studentCtrl.Create(student, null, null);
+
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771

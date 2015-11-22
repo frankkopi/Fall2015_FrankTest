@@ -17,7 +17,7 @@ namespace Fall2015.Tests.Controllers
             Mock<IStudentsRepository> mockRepo = new Mock<IStudentsRepository>();
             Mock<IEmailer> fakeEmailer = new Mock<IEmailer>();
 
-            StudentsController controller = new StudentsController(mockRepo.Object, null, fakeEmailer.Object);
+            StudentsController controller = new StudentsController(mockRepo.Object, null, null, fakeEmailer.Object);
 
             Student s = new Student
             {
@@ -39,7 +39,7 @@ namespace Fall2015.Tests.Controllers
             Mock<IStudentsRepository> mockRepo = 
                 new Mock<IStudentsRepository>();
 
-            StudentsController controller = new StudentsController(mockRepo.Object, null, null);
+            StudentsController controller = new StudentsController(mockRepo.Object, null, null, null);
 
             Student s = new Student
             {

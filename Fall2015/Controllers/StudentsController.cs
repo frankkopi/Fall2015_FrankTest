@@ -33,20 +33,20 @@ namespace Fall2015.Controllers
             return View();
         }
 
-
+        
         public ActionResult Index()
         {
             StudentIndexViewModel viewModel = new StudentIndexViewModel()
             {
                 Students = _studentsRepository.All.ToList(),
+                //Students = _studentsRepository.All.Include(a => a.ApplicationUserId).ToList(),
                 CompetencyHeaders = _competencyHeadersRepository.All.ToList()
             };
 
-            //List<Student> students = _studentsRepository.All.ToList();
-            //return View(students);
             return View(viewModel);
         }
 
+        [Authorize]
         [HttpGet]
         public ActionResult Edit(int studentId)
         {
@@ -60,24 +60,6 @@ namespace Fall2015.Controllers
             };
             return View(viewModel);
         }
-
-        //[HttpPost]
-        //public ActionResult Edit(Student student)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _studentsRepository.InsertOrUpdate(student);
-        //        _studentsRepository.Save();
-        //        return RedirectToAction("Index");
-        //    }
-        //    CreateEditStudentViewModel viewModel = new CreateEditStudentViewModel()
-        //    {
-        //        Student = student,
-        //        Educations = _educationsRepository.All.ToList(),
-        //        CompetencyHeaders = _competencyHeadersRepository.AllIncluding(a => a.Competencies).ToList()
-        //    };
-        //    return View(viewModel);
-        //}
 
 
         [HttpPost]
@@ -106,9 +88,7 @@ namespace Fall2015.Controllers
         }
 
 
-
-
-
+        [Authorize]
         [HttpGet]
         public ActionResult Create()
         {
@@ -136,6 +116,7 @@ namespace Fall2015.Controllers
                 _studentsRepository.Save();
                 _emailer.Send("Welcome to our website...");
 
+                // TODO
                 // get the studentId
                 // send the studentId to each competency from the IEnumerable<int> compIds
 
@@ -165,6 +146,8 @@ namespace Fall2015.Controllers
             return View(student);
         }
 
+
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? studentId)
         {
             if (studentId == null)

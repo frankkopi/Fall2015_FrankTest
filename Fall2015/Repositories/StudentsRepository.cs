@@ -25,7 +25,7 @@ namespace Fall2015.Repositories
 
         public IQueryable<Student> All
         {
-            get { return context.Students; }
+            get { return context.Students.Include(a => a.ApplicationUser); }
         }
 
         public IQueryable<Student> AllIncluding(
