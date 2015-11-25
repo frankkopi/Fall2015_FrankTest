@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Fall2015.ViewModels;
 
 namespace Fall2015.Models
 {
@@ -80,16 +81,8 @@ namespace Fall2015.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-
-        public int StudentId { get; set; }
-
-        [Required(ErrorMessage = "Wrong, stupid user. You must have a firstname.")]
-        public string Firstname { get; set; }
-
-        [Required]
-        public string Lastname { get; set; }
-
-        public string MobilePhone { get; set; }
+        // CreateEditStudentViewModel used inside RegisterViewModel
+        public CreateEditStudentViewModel CreateEditStudentViewModel { get; set; }
 
     }
 

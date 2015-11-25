@@ -7,6 +7,23 @@
 <script src="~/Scripts/jquery-1.10.2.js"></script>
 
 <h2>Index</h2>
+<div class="row">
+    <div class="col-lg-2">
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+    </div>
+    <div class="col-lg-7">
+        @using (Html.BeginForm("Index", "Students", FormMethod.Get))
+        {
+            <p>
+                Search Student Name: @Html.TextBox("searchString")
+                <input type="submit" value="Filter" />
+            </p>
+        }
+    </div>
+</div>
+<br />
 
 
 <div class="container">
@@ -80,9 +97,6 @@
 </div>
 
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>

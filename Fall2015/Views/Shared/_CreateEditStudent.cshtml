@@ -1,0 +1,60 @@
+﻿@using Fall2015.Models
+@model Fall2015.ViewModels.CreateEditStudentViewModel
+
+<div class="blockcenter gray-round">
+
+    <div class="form-group">
+        <!-- Either the html helper -->
+        <!-- Or you can write the html, remember the name attribute so modelbinding works.. -->
+        <!--<input type="text" name="firstname" class="form-control"/>-->
+        @Html.LabelFor(m => m.Student.Firstname)
+        @Html.ValidationMessageFor(m => m.Student.Firstname)
+        @Html.TextBoxFor(m => m.Student.Firstname, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Student.Lastname)
+        @Html.ValidationMessageFor(m => m.Student.Lastname)
+        @Html.TextBoxFor(a => a.Student.Lastname, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Student.Email)
+        @Html.ValidationMessageFor(m => m.Student.Email)
+        @Html.TextBoxFor(a => a.Student.Email, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Student.MobilePhone)
+        @Html.ValidationMessageFor(m => m.Student.MobilePhone)
+        @Html.TextBoxFor(a => a.Student.MobilePhone, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Student.Education)
+        @Html.DropDownListFor(m => m.Student.EducationId, new SelectList(Model.Educations, "EducationId", "Name"))
+    </div>
+
+    <div class="form-group">
+        <!-- To display a user interface component for selecting images -->
+        <!-- The name="image" attribute must match the parameter name in the post action-method for model binding to work -->
+        <input type="file" name="image" />
+    </div>
+
+    @foreach (CompetencyHeader competencyHeader in Model.CompetencyHeaders)
+    {
+        <div>
+            <label>@competencyHeader.Name</label>
+        </div>
+        foreach (Competency competency in competencyHeader.Competencies)
+        {
+            <label>
+                <input type="checkbox" value="@competency.CompetencyId"
+                       name="compIds" />
+                @competency.Name
+            </label>
+        }
+    }
+
+</div>
+

@@ -385,7 +385,7 @@
     <Content Include="Views\Students\Thanks.cshtml" />
     <Content Include="Views\Students\Index.cshtml" />
     <Content Include="Views\Students\Edit.cshtml" />
-    <Content Include="Views\Students\_CreateEditStudent.cshtml" />
+    <Content Include="Views\Shared\_CreateEditStudent.cshtml" />
     <Content Include="Views\Competencies\Create.cshtml" />
     <Content Include="Views\Competencies\Delete.cshtml" />
     <Content Include="Views\Competencies\Details.cshtml" />

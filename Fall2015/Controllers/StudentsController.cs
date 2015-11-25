@@ -34,17 +34,46 @@ namespace Fall2015.Controllers
         }
 
         
-        public ActionResult Index()
+        //public ActionResult Index()
+        //{
+        //    StudentIndexViewModel viewModel = new StudentIndexViewModel()
+        //    {
+        //        Students = _studentsRepository.All.ToList(),
+        //        //Students = _studentsRepository.All.Include(a => a.ApplicationUserId).ToList(),
+        //        CompetencyHeaders = _competencyHeadersRepository.All.ToList()
+        //    };
+
+        //    return View(viewModel);
+        //}
+
+        [AllowAnonymous]
+        public ActionResult Index(string searchString = "")
         {
-            StudentIndexViewModel viewModel = new StudentIndexViewModel()
+            IEnumerable<Student> students = _studentsRepository.All;
+
+            if (!string.IsNullOrEmpty(searchString) && searchString.Contains(" "))
             {
-                Students = _studentsRepository.All.ToList(),
-                //Students = _studentsRepository.All.Include(a => a.ApplicationUserId).ToList(),
+                int spaceIndex = searchString.IndexOf(" ");
+                int toLastIndex = searchString.Length - spaceIndex;
+                var substring1 = searchString.Substring(0, spaceIndex);
+                var substring2 = searchString.Substring(spaceIndex + 1, toLastIndex - 1);
+                students = _studentsRepository.All.Where(s => s.Firstname == (substring1) && s.Lastname == (substring2));
+            }
+            else if (!string.IsNullOrEmpty(searchString))
+            {
+                students = _studentsRepository.All.Where(s => s.Firstname.Contains(searchString) || s.Lastname.Contains(searchString)).OrderBy(x => x.Lastname);
+            }
+
+            StudentIndexViewModel viewModel = new StudentIndexViewModel
+            {
+                Students = students.ToList(),
                 CompetencyHeaders = _competencyHeadersRepository.All.ToList()
             };
 
             return View(viewModel);
+
         }
+
 
         [Authorize]
         [HttpGet]
@@ -117,8 +146,7 @@ namespace Fall2015.Controllers
                 _emailer.Send("Welcome to our website...");
 
                 // TODO
-                // get the studentId
-                // send the studentId to each competency from the IEnumerable<int> compIds
+
 
                 return View("Thanks");
             }

@@ -11,8 +11,6 @@ namespace Fall2015.Models
     {
         public int StudentId { get; set; } // Id
 
-        public string ApplicationUserId { get; set; } // FK Application User (db dbo.AspNetUsers)
-
         [Required(ErrorMessage = "Wrong, stupid user. You must have a firstname.")]
         public String Firstname { get; set; }
 
@@ -27,13 +25,13 @@ namespace Fall2015.Models
 
         public String ProfileImagePath { get; set; }
 
+        public String ApplicationUserId { get; set; } // A reference to a user in ApplicationUser table, the Id is a Guid (String)
+
         public int EducationId { get; set; } // Foreign Key
 
 
         //part of the many-to-many relationsship between Student and Competency
         public virtual ICollection<Competency> Competencies { get; set; }
-
-        public virtual ApplicationUser ApplicationUser { get; set; }
 
         public virtual Education Education { get; set; } // navigation property
 

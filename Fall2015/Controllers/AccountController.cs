@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Fall2015.Models;
 using Fall2015.Repositories;
+using Fall2015.ViewModels;
 
 namespace Fall2015.Controllers
 {
@@ -18,6 +19,9 @@ namespace Fall2015.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        // here we don't use dependency Injection, since we don't want to unit test this class made by microsoft
+        private readonly EducationsRepository _educationsRepository = new EducationsRepository();
+        private readonly CompetencyHeadersRepository _competencyHeadersRepository = new CompetencyHeadersRepository();
 
         public AccountController()
         {
@@ -140,8 +144,17 @@ namespace Fall2015.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            RegisterViewModel model = new RegisterViewModel();
-            return View(model);
+            RegisterViewModel viewModel = new RegisterViewModel
+            {
+                CreateEditStudentViewModel = new CreateEditStudentViewModel
+                {
+                    Student = new Student(),
+                    Educations = _educationsRepository.All.ToList(),
+                    CompetencyHeaders = _competencyHeadersRepository.AllIncluding(a => a.Competencies).ToList()
+                }
+            };
+
+            return View(viewModel);
         }
 
         //
@@ -149,7 +162,7 @@ namespace Fall2015.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, Student student, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
@@ -157,24 +170,15 @@ namespace Fall2015.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    Student student = new Student()
-                    {
-                        StudentId = 0,
-                        ApplicationUserId = user.Id,
-                        Firstname = model.Firstname,
-                        Lastname = model.Lastname,
-                        Email = model.Email,
-                        MobilePhone = model.MobilePhone,
-                        ProfileImagePath = null,
-                        EducationId = 17 // No Education Chosen
-                    };
-                    StudentsController studentCtrl = new StudentsController(new StudentsRepository(), new EducationsRepository(),
-                            new CompetencyHeadersRepository(), new Emailer());
+                    //Save student object to database
+                    StudentsRepository studentsRepository = new StudentsRepository();
+                    student.ApplicationUserId = user.Id;
+                    student.SaveImage(image, Server.MapPath("~"), "/ProfileImages/");
+                    studentsRepository.InsertOrUpdate(student);
+                    studentsRepository.Save();
 
-                    studentCtrl.Create(student, null, null);
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
