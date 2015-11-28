@@ -51,6 +51,22 @@
                 @Html.DisplayFor(model => model.MobilePhone)
             </dd>
 
+            <dt>
+                @Html.DisplayNameFor(model => model.Competencies)
+            </dt>
+
+            <dd>
+                <div>
+                    @foreach (var competency in Model.Competencies)
+                    {
+                        <div>
+                            @competency.CompetencyHeader.Name <span>-</span>
+                            @competency.Name
+                        </div>
+                    }
+                </div>
+            </dd>
+
         </dl>
         <p>
             @Html.ActionLink("Edit", "Edit", new { studentId = Model.StudentId }) |

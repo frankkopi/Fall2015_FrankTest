@@ -23,7 +23,12 @@ namespace Fall2015.Repositories
 
     public class CompetenciesRepository : ICompetenciesRepository
     {
-        ApplicationDbContext context = new ApplicationDbContext();
+        private readonly ApplicationDbContext context;
+
+        public CompetenciesRepository(ApplicationDbContext context)
+        {
+            this.context = context;
+        }
 
         public IQueryable<Competency> All
         {

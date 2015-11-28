@@ -21,7 +21,12 @@ namespace Fall2015.Repositories
 
     public class StudentsRepository : IStudentsRepository
     {
-        ApplicationDbContext context = new ApplicationDbContext();
+        private readonly ApplicationDbContext context;
+
+        public StudentsRepository(ApplicationDbContext context)
+        {
+            this.context = context;
+        }
 
         public IQueryable<Student> All
         {

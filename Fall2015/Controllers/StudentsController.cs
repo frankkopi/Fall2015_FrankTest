@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Fall2015.Helpers;
 using Fall2015.Repositories;
 using Fall2015.ViewModels;
 
@@ -33,18 +34,6 @@ namespace Fall2015.Controllers
             return View();
         }
 
-        
-        //public ActionResult Index()
-        //{
-        //    StudentIndexViewModel viewModel = new StudentIndexViewModel()
-        //    {
-        //        Students = _studentsRepository.All.ToList(),
-        //        //Students = _studentsRepository.All.Include(a => a.ApplicationUserId).ToList(),
-        //        CompetencyHeaders = _competencyHeadersRepository.All.ToList()
-        //    };
-
-        //    return View(viewModel);
-        //}
 
         [AllowAnonymous]
         public ActionResult Index(string searchString = "")
@@ -131,22 +120,34 @@ namespace Fall2015.Controllers
             return View(viewModel);
         }
 
+
         [HttpPost]
-        public ActionResult Create(Student student, HttpPostedFileBase image, IEnumerable<int> compIds)
+        public ActionResult Create([Bind(Include = "FirstName,LastName,Email,MobilePhone,EducationId")]Student student,
+                HttpPostedFileBase image, IEnumerable<int> compIds)
         {
             if (ModelState.IsValid)
             {
-                _studentsRepository.InsertOrUpdate(student);
+                UnitOfWork unitOfWork = new UnitOfWork();
+
+                if (compIds != null)
+                {
+                    student.Competencies = new List<Competency>();
+                    foreach (var competencyId in compIds)
+                    {
+                        var competencyToAdd = unitOfWork.CompetenciesRepository.Find(competencyId);
+                        student.Competencies.Add(competencyToAdd);
+                    }
+
+                }
 
                 //student.SaveImage(image, Server.MapPath("~"), "/ProfileImages/");
                 string path = Server != null ? Server.MapPath("~") : "";
+                student.SaveImage(image, path, "/ProfileImages/");
 
-                student.SaveImage(image, path , "/ProfileImages/");
-                _studentsRepository.Save();
+                unitOfWork.StudentsRepository.InsertOrUpdate(student);
+                unitOfWork.Save();
+
                 _emailer.Send("Welcome to our website...");
-
-                // TODO
-
 
                 return View("Thanks");
             }
@@ -155,6 +156,44 @@ namespace Fall2015.Controllers
                 return View();
             }
         }
+
+
+
+        //[HttpPost]
+        //public ActionResult Create([Bind(Include = "FirstName,LastName,Email,MobilePhone,EducationId")]Student student, 
+        //    HttpPostedFileBase image, IEnumerable<int> compIds)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _studentsRepository.InsertOrUpdate(student);
+
+        //        //student.SaveImage(image, Server.MapPath("~"), "/ProfileImages/");
+        //        string path = Server != null ? Server.MapPath("~") : "";
+
+        //        student.SaveImage(image, path , "/ProfileImages/");
+        //        _studentsRepository.Save();
+        //        _emailer.Send("Welcome to our website...");
+
+        //        var studentId = student.StudentId;
+        //        if (compIds != null)
+        //        {
+        //            student.Competencies = new List<Competency>();
+        //            foreach (var competencyId in compIds)
+        //            {
+        //                var competencyToAdd = _competenciesRepository.Find(competencyId);
+        //                student.Competencies.Add(competencyToAdd);
+        //            }
+        //            _studentsRepository.InsertOrUpdate(student);
+        //            _studentsRepository.Save();
+        //        }
+
+        //        return View("Thanks");
+        //    }
+        //    else
+        //    {
+        //        return View();
+        //    }
+        //}
 
 
         [HttpGet]

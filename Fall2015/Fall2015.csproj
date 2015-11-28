@@ -208,6 +208,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ImageModel.cs" />
+    <Compile Include="Helpers\UnitOfWork.cs" />
     <Compile Include="Migrations\201511012155479_init.cs" />
     <Compile Include="Migrations\201511012155479_init.Designer.cs">
       <DependentUpon>201511012155479_init.cs</DependentUpon>

@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Fall2015.Helpers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -157,12 +159,14 @@ namespace Fall2015.Controllers
             return View(viewModel);
         }
 
+
         //
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model, Student student, HttpPostedFileBase image)
+        public async Task<ActionResult> Register(RegisterViewModel model, Student student,
+                            HttpPostedFileBase image, IEnumerable<int> compIds)
         {
             if (ModelState.IsValid)
             {
@@ -170,12 +174,26 @@ namespace Fall2015.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    //Save student object to database
-                    StudentsRepository studentsRepository = new StudentsRepository();
                     student.ApplicationUserId = user.Id;
-                    student.SaveImage(image, Server.MapPath("~"), "/ProfileImages/");
-                    studentsRepository.InsertOrUpdate(student);
-                    studentsRepository.Save();
+                    UnitOfWork unitOfWork = new UnitOfWork();
+
+                    if (compIds != null)
+                    {
+                        student.Competencies = new List<Competency>();
+                        foreach (var competencyId in compIds)
+                        {
+                            var competencyToAdd = unitOfWork.CompetenciesRepository.Find(competencyId);
+                            student.Competencies.Add(competencyToAdd);
+                        }
+
+                    }
+
+                    //student.SaveImage(image, Server.MapPath("~"), "/ProfileImages/");
+                    string path = Server != null ? Server.MapPath("~") : "";
+                    student.SaveImage(image, path, "/ProfileImages/");
+
+                    unitOfWork.StudentsRepository.InsertOrUpdate(student);
+                    unitOfWork.Save();
 
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
@@ -193,6 +211,7 @@ namespace Fall2015.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
 
         //
         // GET: /Account/ConfirmEmail
