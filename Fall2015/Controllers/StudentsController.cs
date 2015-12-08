@@ -123,29 +123,16 @@ namespace Fall2015.Controllers
 
         [HttpPost]
         public ActionResult Create([Bind(Include = "FirstName,LastName,Email,MobilePhone,EducationId")]Student student,
-                HttpPostedFileBase image, IEnumerable<int> compIds)
+        HttpPostedFileBase image, IEnumerable<int> compIds)
         {
             if (ModelState.IsValid)
             {
-                UnitOfWork unitOfWork = new UnitOfWork();
-
-                if (compIds != null)
-                {
-                    student.Competencies = new List<Competency>();
-                    foreach (var competencyId in compIds)
-                    {
-                        var competencyToAdd = unitOfWork.CompetenciesRepository.Find(competencyId);
-                        student.Competencies.Add(competencyToAdd);
-                    }
-
-                }
-
                 //student.SaveImage(image, Server.MapPath("~"), "/ProfileImages/");
                 string path = Server != null ? Server.MapPath("~") : "";
                 student.SaveImage(image, path, "/ProfileImages/");
 
-                unitOfWork.StudentsRepository.InsertOrUpdate(student);
-                unitOfWork.Save();
+                HandleNewStudentHelper handleNewStudentHelper = new HandleNewStudentHelper(student, compIds);
+                handleNewStudentHelper.HandleNewStudent();
 
                 _emailer.Send("Welcome to our website...");
 
@@ -160,32 +147,32 @@ namespace Fall2015.Controllers
 
 
         //[HttpPost]
-        //public ActionResult Create([Bind(Include = "FirstName,LastName,Email,MobilePhone,EducationId")]Student student, 
-        //    HttpPostedFileBase image, IEnumerable<int> compIds)
+        //public ActionResult Create([Bind(Include = "FirstName,LastName,Email,MobilePhone,EducationId")]Student student,
+        //        HttpPostedFileBase image, IEnumerable<int> compIds)
         //{
         //    if (ModelState.IsValid)
         //    {
-        //        _studentsRepository.InsertOrUpdate(student);
+        //        UnitOfWork unitOfWork = new UnitOfWork();
 
-        //        //student.SaveImage(image, Server.MapPath("~"), "/ProfileImages/");
-        //        string path = Server != null ? Server.MapPath("~") : "";
-
-        //        student.SaveImage(image, path , "/ProfileImages/");
-        //        _studentsRepository.Save();
-        //        _emailer.Send("Welcome to our website...");
-
-        //        var studentId = student.StudentId;
         //        if (compIds != null)
         //        {
         //            student.Competencies = new List<Competency>();
         //            foreach (var competencyId in compIds)
         //            {
-        //                var competencyToAdd = _competenciesRepository.Find(competencyId);
+        //                var competencyToAdd = unitOfWork.CompetenciesRepository.Find(competencyId);
         //                student.Competencies.Add(competencyToAdd);
         //            }
-        //            _studentsRepository.InsertOrUpdate(student);
-        //            _studentsRepository.Save();
+
         //        }
+
+        //        //student.SaveImage(image, Server.MapPath("~"), "/ProfileImages/");
+        //        string path = Server != null ? Server.MapPath("~") : "";
+        //        student.SaveImage(image, path, "/ProfileImages/");
+
+        //        unitOfWork.StudentsRepository.InsertOrUpdate(student);
+        //        unitOfWork.Save();
+
+        //        _emailer.Send("Welcome to our website...");
 
         //        return View("Thanks");
         //    }
@@ -194,6 +181,8 @@ namespace Fall2015.Controllers
         //        return View();
         //    }
         //}
+
+
 
 
         [HttpGet]
