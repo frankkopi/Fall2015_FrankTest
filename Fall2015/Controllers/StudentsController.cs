@@ -131,6 +131,9 @@ namespace Fall2015.Controllers
                 string path = Server != null ? Server.MapPath("~") : "";
                 student.SaveImage(image, path, "/ProfileImages/");
 
+                // Creates a UnitOfWork object (for saving different DbSet in one session to db) and creates a list of all 
+                // competencies to the student and save student to db. This code is also used in the AccountController 
+                // in the Register method
                 HandleNewStudentHelper handleNewStudentHelper = new HandleNewStudentHelper(student, compIds);
                 handleNewStudentHelper.HandleNewStudent();
 
@@ -146,41 +149,6 @@ namespace Fall2015.Controllers
 
 
 
-        //[HttpPost]
-        //public ActionResult Create([Bind(Include = "FirstName,LastName,Email,MobilePhone,EducationId")]Student student,
-        //        HttpPostedFileBase image, IEnumerable<int> compIds)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        UnitOfWork unitOfWork = new UnitOfWork();
-
-        //        if (compIds != null)
-        //        {
-        //            student.Competencies = new List<Competency>();
-        //            foreach (var competencyId in compIds)
-        //            {
-        //                var competencyToAdd = unitOfWork.CompetenciesRepository.Find(competencyId);
-        //                student.Competencies.Add(competencyToAdd);
-        //            }
-
-        //        }
-
-        //        //student.SaveImage(image, Server.MapPath("~"), "/ProfileImages/");
-        //        string path = Server != null ? Server.MapPath("~") : "";
-        //        student.SaveImage(image, path, "/ProfileImages/");
-
-        //        unitOfWork.StudentsRepository.InsertOrUpdate(student);
-        //        unitOfWork.Save();
-
-        //        _emailer.Send("Welcome to our website...");
-
-        //        return View("Thanks");
-        //    }
-        //    else
-        //    {
-        //        return View();
-        //    }
-        //}
 
 
 
@@ -242,4 +210,42 @@ namespace Fall2015.Controllers
 
 
 
+// Example of saving a list of competencies to student. part of the many-to-many relationsship between Student and Competency
+// Here is the navigation proterty Competencies for student
+// public virtual ICollection<Competency> Competencies { get; set; }
 
+//[HttpPost]
+//public ActionResult Create([Bind(Include = "FirstName,LastName,Email,MobilePhone,EducationId")]Student student,
+//        HttpPostedFileBase image, IEnumerable<int> compIds)
+//{
+//    if (ModelState.IsValid)
+//    {
+//        UnitOfWork unitOfWork = new UnitOfWork();
+
+//        if (compIds != null)
+//        {
+//            student.Competencies = new List<Competency>();
+//            foreach (var competencyId in compIds)
+//            {
+//                var competencyToAdd = unitOfWork.CompetenciesRepository.Find(competencyId);
+//                student.Competencies.Add(competencyToAdd);
+//            }
+
+//        }
+
+//        //student.SaveImage(image, Server.MapPath("~"), "/ProfileImages/");
+//        string path = Server != null ? Server.MapPath("~") : "";
+//        student.SaveImage(image, path, "/ProfileImages/");
+
+//        unitOfWork.StudentsRepository.InsertOrUpdate(student);
+//        unitOfWork.Save();
+
+//        _emailer.Send("Welcome to our website...");
+
+//        return View("Thanks");
+//    }
+//    else
+//    {
+//        return View();
+//    }
+//}

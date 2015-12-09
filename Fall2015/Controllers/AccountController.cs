@@ -175,25 +175,16 @@ namespace Fall2015.Controllers
                 if (result.Succeeded)
                 {
                     student.ApplicationUserId = user.Id;
-                    UnitOfWork unitOfWork = new UnitOfWork();
-
-                    if (compIds != null)
-                    {
-                        student.Competencies = new List<Competency>();
-                        foreach (var competencyId in compIds)
-                        {
-                            var competencyToAdd = unitOfWork.CompetenciesRepository.Find(competencyId);
-                            student.Competencies.Add(competencyToAdd);
-                        }
-
-                    }
 
                     //student.SaveImage(image, Server.MapPath("~"), "/ProfileImages/");
                     string path = Server != null ? Server.MapPath("~") : "";
                     student.SaveImage(image, path, "/ProfileImages/");
 
-                    unitOfWork.StudentsRepository.InsertOrUpdate(student);
-                    unitOfWork.Save();
+                    // Creates a UnitOfWork object (for saving different DbSet in one session to db) and creates a list of all 
+                    // competencies to the student and save student to db. This code is also used in the AccountController 
+                    // in the Register method
+                    HandleNewStudentHelper handleNewStudentHelper = new HandleNewStudentHelper(student, compIds);
+                    handleNewStudentHelper.HandleNewStudent();
 
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
