@@ -114,6 +114,9 @@ C:\Users\Lenovo\Desktop\Fall2015_Old\Fall2015\obj\Debug\Fall2015.Migrations.init
 C:\Users\Lenovo\Desktop\Fall2015_Old\Fall2015\obj\Debug\Fall2015.csproj.GenerateResource.Cache
 C:\Users\Lenovo\Desktop\Fall2015_Old\Fall2015\obj\Debug\Fall2015.dll
 C:\Users\Lenovo\Desktop\Fall2015_Old\Fall2015\obj\Debug\Fall2015.pdb
+C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall2015\obj\Debug\Fall2015.Migrations.init.resources
+C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall2015\obj\Debug\Fall2015.Migrations.Initial.resources
+C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall2015\obj\Debug\Fall2015.csproj.GenerateResource.Cache
 C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall2015\bin\roslyn\csc.exe
 C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall2015\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
 C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall2015\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
@@ -129,10 +132,6 @@ C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall201
 C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall2015\bin\Fall2015.dll.config
 C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall2015\bin\Fall2015.dll
 C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall2015\bin\Fall2015.pdb
-C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall2015\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall2015\obj\Debug\Fall2015.Migrations.init.resources
-C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall2015\obj\Debug\Fall2015.Migrations.Initial.resources
-C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall2015\obj\Debug\Fall2015.csproj.GenerateResource.Cache
 C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall2015\obj\Debug\Fall2015.dll
 C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall2015\obj\Debug\Fall2015.pdb
 C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall2015\obj\Debug\Fall2015.csprojResolveAssemblyReference.cache

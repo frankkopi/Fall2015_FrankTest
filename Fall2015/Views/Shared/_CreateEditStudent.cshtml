@@ -1,60 +1,111 @@
 ﻿@using Fall2015.Models
 @model Fall2015.ViewModels.CreateEditStudentViewModel
 
-<div class="blockcenter gray-round">
+<div class="form-horizontal">
+    <hr/>
+    <br/>
 
+
+    <!-- blockcenter gray-round -->
     <div class="form-group">
         <!-- Either the html helper -->
         <!-- Or you can write the html, remember the name attribute so modelbinding works.. -->
         <!--<input type="text" name="firstname" class="form-control"/>-->
-        @Html.LabelFor(m => m.Student.Firstname)
-        @Html.ValidationMessageFor(m => m.Student.Firstname)
-        @Html.TextBoxFor(m => m.Student.Firstname, new { @class = "form-control" })
+        @Html.LabelFor(m => m.Student.Firstname, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.EditorFor(m => m.Student.Firstname, new {htmlAttributes = new {@class = "form-control"}})
+            @Html.ValidationMessageFor(m => m.Student.Firstname, "", new {@class = "text-danger"})
+        </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Student.Lastname)
-        @Html.ValidationMessageFor(m => m.Student.Lastname)
-        @Html.TextBoxFor(a => a.Student.Lastname, new { @class = "form-control" })
+        @Html.LabelFor(m => m.Student.Lastname, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.EditorFor(a => a.Student.Lastname, new {htmlAttributes = new {@class = "form-control"}})
+            @Html.ValidationMessageFor(m => m.Student.Lastname, "", new {@class = "text-danger"})
+        </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Student.Email)
-        @Html.ValidationMessageFor(m => m.Student.Email)
-        @Html.TextBoxFor(a => a.Student.Email, new { @class = "form-control" })
+        @Html.LabelFor(m => m.Student.Email, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.EditorFor(a => a.Student.Email, new {htmlAttributes = new {@class = "form-control"}})
+            @Html.ValidationMessageFor(m => m.Student.Email, "", new {@class = "text-danger"})
+        </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Student.MobilePhone)
-        @Html.ValidationMessageFor(m => m.Student.MobilePhone)
-        @Html.TextBoxFor(a => a.Student.MobilePhone, new { @class = "form-control" })
+        @Html.LabelFor(m => m.Student.MobilePhone, new {@class = "control-label col-md-2"})
+        <div class="col-md-10">
+            @Html.EditorFor(a => a.Student.MobilePhone, new {htmlAttributes = new {@class = "form-control"}})
+            @Html.ValidationMessageFor(m => m.Student.MobilePhone, "", new {@class = "text-danger"})
+        </div>
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(m => m.Student.Education)
-        @Html.DropDownListFor(m => m.Student.EducationId, new SelectList(Model.Educations, "EducationId", "Name"))
+        @Html.LabelFor(m => m.Student.Education, new {@class = "control-label col-md-2"})
+        <div class="col-md-10 ">
+            @Html.DropDownListFor(m => m.Student.EducationId, new SelectList(Model.Educations, "EducationId", "Name"), "-- Status --", new { @class = "form-control"})
+        </div>
     </div>
 
     <div class="form-group">
+        <label class="control-label col-md-2">Photo</label>
         <!-- To display a user interface component for selecting images -->
         <!-- The name="image" attribute must match the parameter name in the post action-method for model binding to work -->
-        <input type="file" name="image" />
+        <div class="col-md-10">
+            <input type="file" name="image" class="form-control"/>
+        </div>
     </div>
 
-    @foreach (CompetencyHeader competencyHeader in Model.CompetencyHeaders)
-    {
-        <div>
-            <label>@competencyHeader.Name</label>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Student.Competencies, new {@class = "control-label col-md-2"})
+        <div class="col-md-10" style="margin-top: 8px;">
+            <table>
+                <tr>
+                @{
+                    int cnt = 0;
+                    List<Fall2015.ViewModels.AssignedCompetencyData> competencies = ViewBag.Competencies;
+
+                    foreach (var competency in competencies)
+                    {
+                        if (cnt++%3 == 0)
+                        {
+                            @:</tr><tr>
+                        }
+                        @:<td>
+                        <input type="checkbox"
+                               name="compIds"
+                               value="@competency.CompetencyId"
+                               @(Html.Raw(competency.Assigned ? "checked=\"checked\"" : ""))/>
+                       
+                        @: @competency.Name
+                        @:</td>
+                    }
+                    @:</tr>
+                }
+            </table>
         </div>
-        foreach (Competency competency in competencyHeader.Competencies)
-        {
-            <label>
-                <input type="checkbox" value="@competency.CompetencyId"
-                       name="compIds" />
-                @competency.Name
-            </label>
-        }
-    }
+    </div>
 
 </div>
+
+        @*@foreach (CompetencyHeader competencyHeader in Model.CompetencyHeaders)
+            {
+                <div>
+                    <label>@competencyHeader.Name</label>
+                </div>
+                foreach (Competency competency in competencyHeader.Competencies)
+                {
+                    <label>
+                        <input type="checkbox" value="@competency.CompetencyId"
+                               name="compIds" />
+                        @competency.Name
+                    </label>
+                }
+            }*@
+
+
+
 

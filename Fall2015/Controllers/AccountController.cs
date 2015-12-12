@@ -24,12 +24,13 @@ namespace Fall2015.Controllers
         // here we don't use dependency Injection, since we don't want to unit test this class made by microsoft
         private readonly EducationsRepository _educationsRepository = new EducationsRepository();
         private readonly CompetencyHeadersRepository _competencyHeadersRepository = new CompetencyHeadersRepository();
+        private readonly ICompetenciesRepository _competenciesRepository = new CompetenciesRepository(new ApplicationDbContext());
 
         public AccountController()
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -156,9 +157,11 @@ namespace Fall2015.Controllers
                 }
             };
 
+            GetListOfCompetenciesHelper getListOfCompetenciesHelper = new GetListOfCompetenciesHelper();
+            ViewBag.Competencies = getListOfCompetenciesHelper.GetAllCompetencyData(_competenciesRepository);
+           
             return View(viewModel);
         }
-
 
         //
         // POST: /Account/Register
@@ -184,7 +187,7 @@ namespace Fall2015.Controllers
                     // competencies to the student and save student to db. This code is also used in the AccountController 
                     // in the Register method
                     HandleNewStudentHelper handleNewStudentHelper = new HandleNewStudentHelper(student, compIds);
-                    handleNewStudentHelper.HandleNewStudent();
+                    handleNewStudentHelper.HandleNewStudent(null);
 
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 

@@ -19,14 +19,16 @@ namespace Fall2015.Controllers
         private readonly IEmailer _emailer;
         private readonly ICompetencyHeadersRepository _competencyHeadersRepository;
         private readonly IEducationsRepository _educationsRepository;
+        private readonly ICompetenciesRepository _competenciesRepository;
 
         public StudentsController(IStudentsRepository studentsRepository, IEducationsRepository  educationsRepository,
-            ICompetencyHeadersRepository competencyHeadersRepository, IEmailer emailer)
+            ICompetencyHeadersRepository competencyHeadersRepository, IEmailer emailer, ICompetenciesRepository competenciesRepository)
         {
             this._studentsRepository = studentsRepository;
             this._educationsRepository = educationsRepository;
             this._competencyHeadersRepository = competencyHeadersRepository;
-            _emailer = emailer;
+            this._emailer = emailer;
+            this._competenciesRepository = competenciesRepository;
         }
 
         public ActionResult GridExample()
@@ -70,6 +72,9 @@ namespace Fall2015.Controllers
         {
             //look up a Student in the db
             Student student = _studentsRepository.Find(studentId);
+
+            PopulateAssignedCompetencyData(student);
+
             CreateEditStudentViewModel viewModel = new CreateEditStudentViewModel()
             {
                 Student = student,
@@ -79,20 +84,39 @@ namespace Fall2015.Controllers
             return View(viewModel);
         }
 
+        // 
+        private void PopulateAssignedCompetencyData(Student student)
+        {
+            var allCompetencies = _competenciesRepository.All;
+            var studentCompetencies = new HashSet<int>(student.Competencies.Select(c => c.CompetencyId));
+            var viewModel = new List<AssignedCompetencyData>();
+        
+            foreach (var competency in allCompetencies)
+            {
+                viewModel.Add(new AssignedCompetencyData()
+                {
+                    CompetencyId = competency.CompetencyId,
+                    Name = competency.Name,
+                    Assigned = studentCompetencies.Contains(competency.CompetencyId)
+                });
+            }
+
+            ViewBag.Competencies = viewModel;
+        }
+
 
         [HttpPost]
         public ActionResult Edit(Student student, HttpPostedFileBase image, IEnumerable<int> compIds)
         {
             if (ModelState.IsValid)
             {
-                _studentsRepository.InsertOrUpdate(student);
-
                 //student.SaveImage(image, Server.MapPath("~"), "/ProfileImages/");
-                string path = Server != null ? Server.MapPath("~") : "";
-  
+                string path = Server != null ? Server.MapPath("~") : "";  
                 student.SaveImage(image, path, "/ProfileImages/");
-                _studentsRepository.Save();
- 
+
+                HandleNewStudentHelper handleNewStudentHelper = new HandleNewStudentHelper(student, compIds);
+                handleNewStudentHelper.HandleNewStudent(true);
+
                 return RedirectToAction("Index");
             }
 
@@ -117,8 +141,31 @@ namespace Fall2015.Controllers
                     CompetencyHeaders = _competencyHeadersRepository.AllIncluding(x => x.Competencies).ToList()
             };
 
+            GetListOfCompetenciesHelper getListOfCompetenciesHelper = new GetListOfCompetenciesHelper();
+            ViewBag.Competencies = getListOfCompetenciesHelper.GetAllCompetencyData(_competenciesRepository); 
+
             return View(viewModel);
         }
+
+
+        //// get all competencies and make a ViewBag with a list of AssignedCompetencyData
+        //private void GetAllCompetencyData()
+        //{
+        //    var allCompetencies = _competenciesRepository.All;
+        //    var viewModel = new List<AssignedCompetencyData>();
+
+        //    foreach (var competency in allCompetencies)
+        //    {
+        //        viewModel.Add(new AssignedCompetencyData()
+        //        {
+        //            CompetencyId = competency.CompetencyId,
+        //            Name = competency.Name,
+        //            Assigned = false
+        //        });
+        //    }
+
+        //    ViewBag.Competencies = viewModel;
+        //}
 
 
         [HttpPost]
@@ -135,7 +182,7 @@ namespace Fall2015.Controllers
                 // competencies to the student and save student to db. This code is also used in the AccountController 
                 // in the Register method
                 HandleNewStudentHelper handleNewStudentHelper = new HandleNewStudentHelper(student, compIds);
-                handleNewStudentHelper.HandleNewStudent();
+                handleNewStudentHelper.HandleNewStudent(null);
 
                 _emailer.Send("Welcome to our website...");
 
@@ -146,11 +193,6 @@ namespace Fall2015.Controllers
                 return View();
             }
         }
-
-
-
-
-
 
 
         [HttpGet]

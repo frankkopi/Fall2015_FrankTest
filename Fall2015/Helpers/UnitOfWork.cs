@@ -10,10 +10,10 @@ namespace Fall2015.Helpers
     public class UnitOfWork : IDisposable
     {
         private readonly ApplicationDbContext _context = new ApplicationDbContext();
-        private IStudentsRepository _studentsRepository;
-        private ICompetenciesRepository _competenciesRepository;
+        private StudentsRepository _studentsRepository;
+        private CompetenciesRepository _competenciesRepository;
 
-        public IStudentsRepository StudentsRepository
+        public StudentsRepository StudentsRepository
         {
             get
             {
@@ -25,7 +25,7 @@ namespace Fall2015.Helpers
             }
         }
 
-        public ICompetenciesRepository CompetenciesRepository
+        public CompetenciesRepository CompetenciesRepository
         {
             get
             {
