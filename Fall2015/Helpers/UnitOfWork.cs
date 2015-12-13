@@ -37,6 +37,10 @@ namespace Fall2015.Helpers
             }
         }
 
+        public ApplicationDbContext GetApplicationDbContext
+        {
+            get { return _context; }
+        }
 
 
         public void Save()

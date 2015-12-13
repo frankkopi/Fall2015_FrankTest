@@ -110,7 +110,6 @@ C:\Users\Lenovo\Desktop\Fall2015\Fall2015.Tests\obj\Debug\Fall2015.Tests.csprojR
 C:\Users\Lenovo\Desktop\Fall2015\Fall2015.Tests\obj\Debug\Fall2015.Tests.dll
 C:\Users\Lenovo\Desktop\Fall2015\Fall2015.Tests\obj\Debug\Fall2015.Tests.pdb
 C:\Users\Lenovo\Desktop\Fall2015_Old\Fall2015.Tests\obj\Debug\Fall2015.Tests.csprojResolveAssemblyReference.cache
-C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall2015.Tests\obj\Debug\Fall2015.Tests.csprojResolveAssemblyReference.cache
 C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall2015.Tests\bin\Debug\roslyn\csc.exe
 C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall2015.Tests\bin\Debug\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
 C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall2015.Tests\bin\Debug\roslyn\Microsoft.CodeAnalysis.CSharp.dll
@@ -158,5 +157,6 @@ C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall201
 C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall2015.Tests\bin\Debug\System.Web.WebPages.xml
 C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall2015.Tests\bin\Debug\System.Web.WebPages.Deployment.xml
 C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall2015.Tests\bin\Debug\System.Web.WebPages.Razor.xml
+C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall2015.Tests\obj\Debug\Fall2015.Tests.csprojResolveAssemblyReference.cache
 C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall2015.Tests\obj\Debug\Fall2015.Tests.dll
 C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall2015.Tests\obj\Debug\Fall2015.Tests.pdb
