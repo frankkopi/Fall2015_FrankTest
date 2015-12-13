@@ -134,3 +134,4 @@ C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall201
 C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall2015\obj\Debug\Fall2015.csproj.GenerateResource.Cache
 C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall2015\obj\Debug\Fall2015.dll
 C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall2015\obj\Debug\Fall2015.pdb
+C:\Users\Lenovo\Documents\Visual Studio 2015\Projects\Fall2015_FrankTest\Fall2015\obj\Debug\Fall2015.csprojResolveAssemblyReference.cache

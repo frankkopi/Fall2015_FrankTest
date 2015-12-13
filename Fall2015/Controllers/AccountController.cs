@@ -184,10 +184,10 @@ namespace Fall2015.Controllers
                     student.SaveImage(image, path, "/ProfileImages/");
 
                     // Creates a UnitOfWork object (for saving different DbSet in one session to db) and creates a list of all 
-                    // competencies to the student and save student to db. This code is also used in the AccountController 
+                    // competencies to the student and save student to db. This code is also used in the StudentsController 
                     // in the Register method
-                    HandleNewStudentHelper handleNewStudentHelper = new HandleNewStudentHelper(student, compIds);
-                    handleNewStudentHelper.HandleNewStudent(null);
+                    HandleStudentHelper handleStudentHelper = new HandleStudentHelper(student, compIds);
+                    handleStudentHelper.HandleStudent(null);
 
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 

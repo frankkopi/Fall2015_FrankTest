@@ -208,7 +208,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\GetListOfCompetenciesHelper.cs" />
-    <Compile Include="Helpers\HandleNewStudentHelper.cs" />
+    <Compile Include="Helpers\HandleStudentHelper.cs" />
     <Compile Include="Helpers\ImageModel.cs" />
     <Compile Include="Helpers\UnitOfWork.cs" />
     <Compile Include="Migrations\201511012155479_init.cs" />

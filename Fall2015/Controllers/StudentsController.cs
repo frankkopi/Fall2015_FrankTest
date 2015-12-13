@@ -84,7 +84,7 @@ namespace Fall2015.Controllers
             return View(viewModel);
         }
 
-        // 
+        // Creates a ViewBag with a list of AssignedCompetencyData (all competencies with flags if they are currently assigned to the student or not)  
         private void PopulateAssignedCompetencyData(Student student)
         {
             var allCompetencies = _competenciesRepository.All;
@@ -114,8 +114,8 @@ namespace Fall2015.Controllers
                 string path = Server != null ? Server.MapPath("~") : "";  
                 student.SaveImage(image, path, "/ProfileImages/");
 
-                HandleNewStudentHelper handleNewStudentHelper = new HandleNewStudentHelper(student, compIds);
-                handleNewStudentHelper.HandleNewStudent(true);
+                HandleStudentHelper handleStudentHelper = new HandleStudentHelper(student, compIds);
+                handleStudentHelper.HandleStudent(true);
 
                 return RedirectToAction("Index");
             }
@@ -148,26 +148,6 @@ namespace Fall2015.Controllers
         }
 
 
-        //// get all competencies and make a ViewBag with a list of AssignedCompetencyData
-        //private void GetAllCompetencyData()
-        //{
-        //    var allCompetencies = _competenciesRepository.All;
-        //    var viewModel = new List<AssignedCompetencyData>();
-
-        //    foreach (var competency in allCompetencies)
-        //    {
-        //        viewModel.Add(new AssignedCompetencyData()
-        //        {
-        //            CompetencyId = competency.CompetencyId,
-        //            Name = competency.Name,
-        //            Assigned = false
-        //        });
-        //    }
-
-        //    ViewBag.Competencies = viewModel;
-        //}
-
-
         [HttpPost]
         public ActionResult Create([Bind(Include = "FirstName,LastName,Email,MobilePhone,EducationId")]Student student,
         HttpPostedFileBase image, IEnumerable<int> compIds)
@@ -181,8 +161,8 @@ namespace Fall2015.Controllers
                 // Creates a UnitOfWork object (for saving different DbSet in one session to db) and creates a list of all 
                 // competencies to the student and save student to db. This code is also used in the AccountController 
                 // in the Register method
-                HandleNewStudentHelper handleNewStudentHelper = new HandleNewStudentHelper(student, compIds);
-                handleNewStudentHelper.HandleNewStudent(null);
+                HandleStudentHelper handleStudentHelper = new HandleStudentHelper(student, compIds);
+                handleStudentHelper.HandleStudent(null);
 
                 _emailer.Send("Welcome to our website...");
 

@@ -9,18 +9,18 @@ using Fall2015.ViewModels;
 
 namespace Fall2015.Helpers
 {
-    public class HandleNewStudentHelper
+    public class HandleStudentHelper
     {
         private readonly Student _student;
         private readonly IEnumerable<int> _compIds;
 
-        public HandleNewStudentHelper(Student student, IEnumerable<int> compIds)
+        public HandleStudentHelper(Student student, IEnumerable<int> compIds)
         {
             this._student = student;
             this._compIds = compIds;
         }
 
-        public void HandleNewStudent(bool? editStudent)
+        public void HandleStudent(bool? editStudent)
         {
             // Create new student with given competencies
             if (_compIds != null && editStudent == null)
