@@ -14,7 +14,7 @@ namespace Fall2015.Models
 
         public virtual CompetencyHeader CompetencyHeader { get; set; }
 
-        // new code frank //part of the many-to-many relationsship between Student and Competency
+        //part of the many-to-many relationsship between Student and Competency
         public virtual ICollection<Student> Students { get; set; } 
 
 

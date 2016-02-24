@@ -1,4 +1,4 @@
-﻿' @model Fall2015.ViewModels.StudentIndexViewModel
+﻿@model Fall2015.ViewModels.StudentIndexViewModel
 
 @{
     ViewBag.Title = "Index";
@@ -192,7 +192,7 @@
                         
                         $("#btnSave").remove();
                         $(".compHeader").remove();
-                        //location.reload();
+                        location.reload();
                     },
                     error: function () {
                         alert("Something bad happended");
